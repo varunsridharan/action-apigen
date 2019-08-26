@@ -1,5 +1,5 @@
-name: 'APIGEN'
-description: ''
+name: 'ApiGen'
+description: 'Github Action To Generate Code Docs Website For PHP Using ApiGen'
 author: 'varunsridharan'
 branding:
   icon: 'hard-drive'
