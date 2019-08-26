@@ -1,0 +1,16 @@
+name: 'APIGEN'
+description: ''
+author: 'varunsridharan'
+branding:
+  icon: 'hard-drive'
+  color: 'green'
+inputs:
+  push_to_branch:
+    description: 'Which Branch/Folder To Push'
+    default: 'gh-pages'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.push_to_branch }}
