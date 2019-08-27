@@ -19,7 +19,7 @@ fi
 git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
 
 # Custom Command Option
-if [[ ! -z "$CUSTOM_CMD" ]]; then
+if [[ ! -z "$BEFORE_CMD" ]]; then
   echo "Running BEFORE_CMD"
   eval "$BEFORE_CMD"
 fi
@@ -42,7 +42,7 @@ echo "Running ApiGen"
 
 cd $GITHUB_WORKSPACE
 # Custom Command Option
-if [[ ! -z "$CUSTOM_CMD" ]]; then
+if [[ ! -z "$AFTER_CMD" ]]; then
   echo "Running AFTER_CMD"
   eval "$AFTER_CMD"
 fi
