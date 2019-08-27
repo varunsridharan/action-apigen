@@ -1,4 +1,4 @@
-name: 'ApiGen'
+name: 'ApiGen Docs'
 description: 'Github Action To Generate Code Docs Website For PHP Using ApiGen'
 author: 'varunsridharan'
 branding:
