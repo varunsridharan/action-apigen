@@ -2,10 +2,12 @@
 set -eu
 
 PUSH_TO_BRANCH="$INPUT_PUSH_TO_BRANCH"
+BEFORE_CMD="$INPUT_BEFORE_CMD"
+AFTER_CMD="$INPUT_AFTER_CMD"
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
-	echo "Set the GITHUB_TOKEN env variable"
-	exit 1
+  echo "Set the GITHUB_TOKEN env variable"
+  exit 1
 fi
 
 if [[ -z "$PUSH_TO_BRANCH" ]]; then
@@ -15,6 +17,12 @@ fi
 
 # Update Github Config.
 git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
+
+# Custom Command Option
+if [[ ! -z "$CUSTOM_CMD" ]]; then
+  echo "Running BEFORE_CMD"
+  eval "$BEFORE_CMD"
+fi
 
 cd ../
 echo "Creating Required TEMP DIR"
@@ -31,6 +39,13 @@ chmod +x ./vendor/bin/apigen
 
 echo "Running ApiGen"
 ./vendor/bin/apigen generate -s $GITHUB_WORKSPACE --destination ../apigen_ouput
+
+cd $GITHUB_WORKSPACE
+# Custom Command Option
+if [[ ! -z "$CUSTOM_CMD" ]]; then
+  echo "Running AFTER_CMD"
+  eval "$AFTER_CMD"
+fi
 
 echo "Validating Output"
 cd ../apigen_ouput/

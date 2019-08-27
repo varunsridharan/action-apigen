@@ -8,9 +8,17 @@ inputs:
   push_to_branch:
     description: 'Which Branch/Folder To Push'
     default: 'gh-pages'
+  before_cmd:
+    description: 'Custom Command To Run Before Generating Docs'
+    default: ''
+  after_cmd:
+    description: 'Custom Command To Run After Generating Docs'
+    default: ''
 
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.push_to_branch }}
+    - ${{ inputs.before_cmd }}
+    - ${{ inputs.after_cmd }}
