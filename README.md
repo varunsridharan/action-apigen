@@ -7,6 +7,8 @@ Github Action To Generate Code Docs Website For PHP Using ApiGen
 | Argument | Default | Description |
 | --- | ------- | ----------- |
 |`push_to_branch` | gh-pages | Which Branch To Push |
+|`before_cmd` | null | Option to run custom cmd before generating docs |
+|`after_cmd` | null | Option to run custom cmd after generating docs |
 ---
 
 > **Note** Provide A Branch Which is only for the docs. if any other contents in it then all will be deleted **DO NOT USE : MASTER**  
