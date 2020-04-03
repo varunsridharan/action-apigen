@@ -46,7 +46,13 @@ echo "Installing Composer"
 cd apigen
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
+echo '{
+    "require": {
+        "apigen/apigen": "dev-master",
+        "roave/better-reflection": "dev-master#c87d856"
+    }
+}' >>composer.json
+
 composer update
 chmod +x ./vendor/bin/apigen
 
