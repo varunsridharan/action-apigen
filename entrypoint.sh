@@ -8,21 +8,21 @@ AUTO_PUSH="$INPUT_AUTO_PUSH"
 OUTPUT_FOLDER="$INPUT_OUTPUT_FOLDER"
 SOURCE_FOLDER="$INPUT_SOURCE_FOLDER"
 
-if [[ -z "$GITHUB_TOKEN" ]]; then
+if [ -z "$GITHUB_TOKEN" ]; then
   echo "Set the GITHUB_TOKEN env variable"
   exit 1
 fi
 
-if [[ -z "$PUSH_TO_BRANCH" ]]; then
+if [ -z "$PUSH_TO_BRANCH" ]; then
   echo "Set the PUSH_TO_BRANCH Variable"
   exit 1
 fi
 
-if [[ -z "$AUTO_PUSH" ]]; then
+if [ -z "$AUTO_PUSH" ]; then
   AUTO_PUSH="yes"
 fi
 
-if [[ -z "$SOURCE_FOLDER" ]]; then
+if [ -z "$SOURCE_FOLDER" ]; then
   SOURCE_FOLDER=""
 fi
 
@@ -44,14 +44,15 @@ mkdir apigen_ouput
 
 echo "Installing Composer"
 cd apigen
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
 composer update
 chmod +x ./vendor/bin/apigen
 
 echo "Running ApiGen"
-./vendor/bin/apigen generate -s $GITHUB_WORKSPACE $SOURCE_FOLDER --destination ../apigen_ouput
+FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE $SOURCE_FOLDER"
+./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
 
 cd $GITHUB_WORKSPACE
 # Custom Command Option
