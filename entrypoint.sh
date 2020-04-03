@@ -59,7 +59,7 @@ chmod +x ./vendor/bin/apigen
 echo "Running ApiGen"
 FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
 echo "Source FOLDER : $FULL_SOURCE_FOLDER"
-./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
+./vendor/bin/apigen generate -src $FULL_SOURCE_FOLDER --destination ../apigen_ouput
 
 cd $GITHUB_WORKSPACE
 # Custom Command Option
