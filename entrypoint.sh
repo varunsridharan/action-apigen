@@ -6,6 +6,7 @@ BEFORE_CMD="$INPUT_BEFORE_CMD"
 AFTER_CMD="$INPUT_AFTER_CMD"
 AUTO_PUSH="$INPUT_AUTO_PUSH"
 OUTPUT_FOLDER="$INPUT_OUTPUT_FOLDER"
+SOURCE_FOLDER="$INPUT_SOURCE_FOLDER"
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
   echo "Set the GITHUB_TOKEN env variable"
@@ -19,6 +20,10 @@ fi
 
 if [[ -z "$AUTO_PUSH" ]]; then
   AUTO_PUSH="yes"
+fi
+
+if [[ -z "$SOURCE_FOLDER" ]]; then
+  SOURCE_FOLDER=""
 fi
 
 if ['yes' == $AUTO_PUSH]; then
@@ -46,7 +51,7 @@ composer update
 chmod +x ./vendor/bin/apigen
 
 echo "Running ApiGen"
-./vendor/bin/apigen generate -s $GITHUB_WORKSPACE --destination ../apigen_ouput
+./vendor/bin/apigen generate -s $GITHUB_WORKSPACE $SOURCE_FOLDER --destination ../apigen_ouput
 
 cd $GITHUB_WORKSPACE
 # Custom Command Option

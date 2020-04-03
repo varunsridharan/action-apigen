@@ -20,6 +20,9 @@ inputs:
   output_folder:
     description: 'Custom Output Folder if auto_push is disabled'
     default: ''
+  source_folder:
+    description: 'Custom Source Folder'
+    default: ''
 
 runs:
   using: 'docker'
