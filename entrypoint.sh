@@ -51,7 +51,7 @@ composer update
 chmod +x ./vendor/bin/apigen
 
 echo "Running ApiGen"
-FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE $SOURCE_FOLDER"
+FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
 echo "Source FOLDER : $FULL_SOURCE_FOLDER"
 ./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
 
