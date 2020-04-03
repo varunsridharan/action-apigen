@@ -14,6 +14,12 @@ inputs:
   after_cmd:
     description: 'Custom Command To Run After Generating Docs'
     default: ''
+  auto_push:
+    description: 'IF this can auto push to the repo'
+    default: 'yes'
+  output_folder:
+    description: 'Custom Output Folder if auto_push is disabled'
+    default: ''
 
 runs:
   using: 'docker'
@@ -22,3 +28,5 @@ runs:
     - ${{ inputs.push_to_branch }}
     - ${{ inputs.before_cmd }}
     - ${{ inputs.after_cmd }}
+    - ${{ inputs.auto_push }}
+    - ${{ inputs.output_folder }}

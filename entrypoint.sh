@@ -4,6 +4,8 @@ set -eu
 PUSH_TO_BRANCH="$INPUT_PUSH_TO_BRANCH"
 BEFORE_CMD="$INPUT_BEFORE_CMD"
 AFTER_CMD="$INPUT_AFTER_CMD"
+AUTO_PUSH="$INPUT_AUTO_PUSH"
+OUTPUT_FOLDER="$INPUT_OUTPUT_FOLDER"
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
   echo "Set the GITHUB_TOKEN env variable"
@@ -15,8 +17,14 @@ if [[ -z "$PUSH_TO_BRANCH" ]]; then
   exit 1
 fi
 
-# Update Github Config.
-git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
+if [[ -z "$AUTO_PUSH" ]]; then
+  AUTO_PUSH="yes"
+fi
+
+if ['yes' == $AUTO_PUSH]; then
+  # Update Github Config.
+  git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
+fi
 
 # Custom Command Option
 if [[ ! -z "$BEFORE_CMD" ]]; then
@@ -49,11 +57,20 @@ fi
 
 echo "Validating Output"
 cd ../apigen_ouput/
-ls -la
+ls -lah
 
-echo "Pushing To Github"
-git init
-git remote add origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
-git add .
-git commit -m "ApiGen Code Docs Regenerated"
-git push origin "master:${PUSH_TO_BRANCH}" -f
+if ['yes' == $AUTO_PUSH]; then
+  echo "Pushing To Github"
+  git init
+  git remote add origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+  git add .
+  git commit -m "ApiGen Code Docs Regenerated"
+  git push origin "master:${PUSH_TO_BRANCH}" -f
+else
+  cd $GITHUB_WORKSPACE
+  cp -r ../apigen_ouput/* $OUTPUT_FOLDER
+  cd $OUTPUT_FOLDER
+  ls -lah
+  rm -rf ../apigen_ouput
+
+fi
