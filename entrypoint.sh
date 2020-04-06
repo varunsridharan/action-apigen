@@ -49,7 +49,7 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 echo '{
     "require": {
         "apigen/apigen": "dev-master",
-        "roave/better-reflection": "dev-master"
+        "roave/better-reflection": "dev-master#c87d856"
     }
 }' >>composer.json
 
