@@ -107,6 +107,7 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
 
   cp -r apigen_ouput/* $PUSH_TO_BRANCH/
   cd $PUSH_TO_BRANCH/
+
   if [[ "$(git status --porcelain)" != "" ]]; then
     git add .
     git commit -m "📖 #$GITHUB_RUN_NUMBER - ApiGen Code Docs Regenerated / ⚡ Triggered By $GITHUB_SHA"
@@ -118,7 +119,8 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
     echo "
 ✅ Nothing To Push
 "
-  if
+  fi
+
 else
   cd $GITHUB_WORKSPACE
   cp -r ../apigen_ouput/* $OUTPUT_FOLDER
