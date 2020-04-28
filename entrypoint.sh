@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-
+YES_VAL="yes"
 PUSH_TO_BRANCH="$INPUT_PUSH_TO_BRANCH"
 BEFORE_CMD="$INPUT_BEFORE_CMD"
 AFTER_CMD="$INPUT_AFTER_CMD"
@@ -26,7 +26,7 @@ if [ -z "$SOURCE_FOLDER" ]; then
   SOURCE_FOLDER=""
 fi
 
-if ["$AUTO_PUSH" == 'yes']; then
+if [$AUTO_PUSH == $YES_VAL]; then
   # Update Github Config.
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
 fi
@@ -68,7 +68,7 @@ echo "Validating Output"
 cd ../apigen_ouput/
 ls -la
 
-if ["$AUTO_PUSH" == 'yes']; then
+if [$AUTO_PUSH == $YES_VAL]; then
   echo "Pushing To Github"
   git init
   git remote add origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
