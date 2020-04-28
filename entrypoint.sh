@@ -26,7 +26,7 @@ if [ -z "$SOURCE_FOLDER" ]; then
 fi
 
 FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
-
+COMPOSER_LOG_FILE="composer_installer_log.txt"
 #echo "
 #👽   Global Variable
 #✏️   PUSH_TO_BRANCH : $PUSH_TO_BRANCH
@@ -51,11 +51,18 @@ mkdir apigen
 mkdir apigen_ouput
 cd apigen
 echo "✨ Installing Composer"
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >> /dev/null 2>&1
 echo "✨ Installing ApiGen"
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
-composer update
+composer update >> $COMPOSER_LOG_FILE
 chmod +x ./vendor/bin/apigen
+
+echo "----------------------"
+echo "📈 ApiGen Install Log"
+echo "//////////////////////////////"
+cat $COMPOSER_LOG_FILE
+rm -rf $COMPOSER_LOG_FILE
+echo "//////////////////////////////"
 
 echo " "
 echo "------------------------------------"
