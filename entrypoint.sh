@@ -24,12 +24,12 @@ fi
 
 echo "
 👽   Global Variable
-✏️PUSH_TO_BRANCH : $PUSH_TO_BRANCH
-✏️BEFORE_CMD : $BEFORE_CMD
-✏️AFTER_CMD : $AFTER_CMD
-✏️AUTO_PUSH : $AUTO_PUSH
-✏️OUTPUT_FOLDER : $OUTPUT_FOLDER
-✏️SOURCE_FOLDER : $SOURCE_FOLDER
+✏️   PUSH_TO_BRANCH : $PUSH_TO_BRANCH
+✏️   BEFORE_CMD : $BEFORE_CMD
+✏️   AFTER_CMD : $AFTER_CMD
+✏️   AUTO_PUSH : $AUTO_PUSH
+✏️   OUTPUT_FOLDER : $OUTPUT_FOLDER
+✏️   SOURCE_FOLDER : $SOURCE_FOLDER
 "
 
 # Custom Command Option
@@ -39,11 +39,15 @@ if [[ ! -z "$BEFORE_CMD" ]]; then
 fi
 
 cd ../
-echo ":building_construction: : Doing Groud Work"
+echo "
+🏗 Doing Groud Work
+"
 mkdir apigen
 mkdir apigen_ouput
 
-echo "✨ Installing Composer"
+echo "
+✨ Installing Composer
+"
 cd apigen
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
@@ -55,23 +59,29 @@ FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
 echo "
 🚀 Running ApiGen
 Source Folder : $FULL_SOURCE_FOLDER
+
 "
 ./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
 
 cd $GITHUB_WORKSPACE
 # Custom Command Option
 if [[ ! -z "$AFTER_CMD" ]]; then
-  echo "⚡️Running AFTER_CMD"
+  echo "
+  ⚡️Running AFTER_CMD
+  "
   eval "$AFTER_CMD"
 fi
 
-echo "✅ Validating Output"
-cd ../apigen_ouput/
-ls -la
+echo "
+✅ Validating Output
+"
+cd ../apigen_ouput/ && ls -la
 
-echo " "
+echo "
 
-if [! -z $AUTO_PUSH ]; then
+"
+
+if [ ! -z $AUTO_PUSH ]; then
   echo "🚚 Pushing To Github"
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   git init
