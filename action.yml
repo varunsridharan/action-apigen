@@ -1,5 +1,5 @@
 name: 'ApiGen Docs'
-description: 'Github Action To Generate Code Docs Website For PHP Using ApiGen'
+description: 'Simple Github Action Which Helps You To Generate PHP Code Documentation Website Using ApiGen'
 author: 'varunsridharan'
 branding:
   icon: 'hard-drive'
@@ -9,19 +9,19 @@ inputs:
     description: 'Which Branch/Folder To Push'
     default: 'gh-pages'
   before_cmd:
-    description: 'Custom Command To Run Before Generating Docs'
+    description: 'Command To Run Before ApiGen'
     default: ''
   after_cmd:
-    description: 'Custom Command To Run After Generating Docs'
+    description: 'Command To Run After ApiGen'
     default: ''
   auto_push:
-    description: 'IF this can auto push to the repo'
+    description: 'if set to yes then it auto pushes latest source to current repo with the push_to_branch'
     default: 'yes'
   output_folder:
-    description: 'Custom Output Folder if auto_push is disabled'
+    description: 'Custom output folder if auto_push is disabled'
     default: ''
   source_folder:
-    description: 'Custom Source Folder'
+    description: 'Custom Source Folder if auto_push is disabled'
     default: ''
 
 runs:

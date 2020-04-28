@@ -1,4 +1,3 @@
-#FROM alpine:latest
 FROM php:7.1-cli-alpine3.10
 
 RUN apk add git

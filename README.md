@@ -1,7 +1,5 @@
-> **⚠️ Note:** To use this GitHub Action, you must have access to GitHub Actions. GitHub Actions are currently only available in public beta. You can [apply for Github Actions beta access here](https://github.com/features/actions).
-
 # ApiGen - ***Github Action***
-Github Action To Generate Code Docs Website For PHP Using ApiGen
+Simple Github Action Which Helps You To Generate PHP Code Documentation Website Using ApiGen
 
 ## Configuration
 | Argument | Default | Description |
@@ -9,6 +7,9 @@ Github Action To Generate Code Docs Website For PHP Using ApiGen
 |`push_to_branch` | gh-pages | Which Branch To Push |
 |`before_cmd` | null | Option to run custom cmd before generating docs |
 |`after_cmd` | null | Option to run custom cmd after generating docs |
+|`auto_push` | Yes | If set the `Yes` then it auto pushes generated files to current github repo to the branch defined in `push_to_branch` |
+|`output_folder` | null | This option can be used to provide custom output folder if `auto_push` is disabled |
+|`source_folder` | null | This option can be used to provide custom source folder if `auto_push` is disabled |
 ---
 
 > **Note** Provide A Branch Which is only for the docs. if any other contents in it then all will be deleted **DO NOT USE : MASTER**  
@@ -16,24 +17,26 @@ Github Action To Generate Code Docs Website For PHP Using ApiGen
 
 ## Example Workflow File
 ```yaml
-name: ApiGen
+name: ON_PUSH
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
-  apigen:
+  Document_Generator:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: ApiGen Docs Generator
-      uses: varunsridharan/action-apigen@master
+    - name: 📝 ApiGen PHP Document Generator
+      uses: varunsridharan/action-apigen@2.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
 ```
 
 ---
-
 ## Contribute
 If you would like to help, please take a look at the list of
 [issues][issues] or the [To Do](#-todo) checklist.
