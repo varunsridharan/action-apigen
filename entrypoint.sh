@@ -22,15 +22,15 @@ if [ -z "$SOURCE_FOLDER" ]; then
   SOURCE_FOLDER=""
 fi
 
-echo "
-👽   Global Variable
-✏️   PUSH_TO_BRANCH : $PUSH_TO_BRANCH
-✏️   BEFORE_CMD : $BEFORE_CMD
-✏️   AFTER_CMD : $AFTER_CMD
-✏️   AUTO_PUSH : $AUTO_PUSH
-✏️   OUTPUT_FOLDER : $OUTPUT_FOLDER
-✏️   SOURCE_FOLDER : $SOURCE_FOLDER
-"
+#echo "
+#👽   Global Variable
+#✏️   PUSH_TO_BRANCH : $PUSH_TO_BRANCH
+#✏️   BEFORE_CMD : $BEFORE_CMD
+#✏️   AFTER_CMD : $AFTER_CMD
+#✏️   AUTO_PUSH : $AUTO_PUSH
+#✏️   OUTPUT_FOLDER : $OUTPUT_FOLDER
+#✏️   SOURCE_FOLDER : $SOURCE_FOLDER
+#"
 
 # Custom Command Option
 if [[ ! -z "$BEFORE_CMD" ]]; then
@@ -39,15 +39,11 @@ if [[ ! -z "$BEFORE_CMD" ]]; then
 fi
 
 cd ../
-echo "
-🏗 Doing Groud Work
-"
+echo "🏗 Doing Groud Work"
 mkdir apigen
 mkdir apigen_ouput
 
-echo "
-✨ Installing Composer
-"
+echo "✨ Installing Composer"
 cd apigen
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
@@ -82,12 +78,14 @@ echo "
 "
 
 if [ ! -z $AUTO_PUSH ]; then
-  echo "🚚 Pushing To Github"
+  echo "
+  🚚 Pushing To Github
+  "
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   git init
   git remote add origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
   git add .
-  git commit -m "📝 ApiGen Code Docs Regenerated"
+  git commit -m "📖 ApiGen Code Docs Regenerated"
   git push origin "master:${PUSH_TO_BRANCH}" -f
 else
   cd $GITHUB_WORKSPACE
