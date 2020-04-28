@@ -22,6 +22,16 @@ if [ -z "$SOURCE_FOLDER" ]; then
   SOURCE_FOLDER=""
 fi
 
+echo "
+👽   Global Variable
+✏️PUSH_TO_BRANCH : $PUSH_TO_BRANCH
+✏️BEFORE_CMD : $BEFORE_CMD
+✏️AFTER_CMD : $AFTER_CMD
+✏️AUTO_PUSH : $AUTO_PUSH
+✏️OUTPUT_FOLDER : $OUTPUT_FOLDER
+✏️SOURCE_FOLDER : $SOURCE_FOLDER
+"
+
 # Custom Command Option
 if [[ ! -z "$BEFORE_CMD" ]]; then
   echo "⚡️ Running BEFORE_CMD"
