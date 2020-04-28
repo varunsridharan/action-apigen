@@ -1,5 +1,5 @@
 #FROM alpine:latest
-FROM composer:1.5.0
+FROM composer:1.3.0
 
 COPY entrypoint.sh /entrypoint.sh
 
