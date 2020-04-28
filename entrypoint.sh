@@ -87,8 +87,8 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   if [ -z "$(git ls-remote --heads https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git ${PUSH_TO_BRANCH})" ]; then
     git clone --quiet https://x-access-token:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
     cd $PUSH_TO_BRANCH
-    git checkout --orphan $PUSH_TO_BRANCH
-    git rm -rf .
+    git checkout --orphan $PUSH_TO_BRANCH > /dev/null
+    git rm -rf . > /dev/null
     echo "$GITHUB_REPOSITORY" > README.md
     git add README.md
     git commit -a -m "➕ Create $PUSH_TO_BRANCH Branch"
