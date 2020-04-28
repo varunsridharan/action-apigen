@@ -8,6 +8,9 @@ AUTO_PUSH="$INPUT_AUTO_PUSH"
 OUTPUT_FOLDER="$INPUT_OUTPUT_FOLDER"
 SOURCE_FOLDER="$INPUT_SOURCE_FOLDER"
 
+echo "
+"
+
 if [[ -z "$GITHUB_TOKEN" ]]; then
   echo "🚩 Set the GITHUB_TOKEN env variable"
   exit 1
@@ -43,7 +46,8 @@ echo "🏗 Doing Groud Work"
 mkdir apigen
 mkdir apigen_ouput
 
-echo "✨ Installing Composer"
+echo "✨ Installing Composer
+"
 cd apigen
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
@@ -77,7 +81,8 @@ echo "
 
 "
 
-if [ ! -z $AUTO_PUSH ]; then
+#if [ ! -z $AUTO_PUSH ]; then
+if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   echo "
   🚚 Pushing To Github
   "
