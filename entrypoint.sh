@@ -87,7 +87,7 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
     cd $PUSH_TO_BRANCH
     git checkout --orphan $PUSH_TO_BRANCH
     git rm -rf .
-    echo "$REPONAME" > README.md
+    echo "$GITHUB_REPOSITORY" > README.md
     git add README.md
     git commit -a -m "➕ Create $PUSH_TO_BRANCH Branch"
     git push origin $PUSH_TO_BRANCH
