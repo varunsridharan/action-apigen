@@ -26,7 +26,10 @@ fi
 
 if [[ ! -z "$BEFORE_CMD" ]]; then
   echo "⚡️ Running BEFORE_CMD"
+  echo "---------------------------------------------------------------"
   eval "$BEFORE_CMD"
+  echo "---------------------------------------------------------------"
+  echo " "
 fi
 
 cd ../
@@ -40,36 +43,36 @@ cd apigen
 
 echo "✨ Installing Composer"
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >>/dev/null 2>&1
-
 echo "✨ Installing ApiGen"
-echo "//////////////////////////////"
-echo " "
+#echo "//////////////////////////////"
+#echo " "
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
-composer update
+composer update >>/dev/null 2>&1
 chmod +x ./vendor/bin/apigen
-echo " "
-echo "//////////////////////////////"
-
-echo " "
-echo "------------------------------------"
+#echo " "
+#echo "//////////////////////////////"
+#echo " "
+#echo "------------------------------------"
 echo "🚀 Running ApiGen"
 echo "--- 📈 Source Folder : $FULL_SOURCE_FOLDER"
-echo "------------------------------------"
+#echo "------------------------------------"
 echo " "
 ./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
 cd $GITHUB_WORKSPACE
 
 if [[ ! -z "$AFTER_CMD" ]]; then
   echo "⚡️Running AFTER_CMD"
-  echo " "
+  echo "---------------------------------------------------------------"
   eval "$AFTER_CMD"
+  echo "---------------------------------------------------------------"
+  echo " "
 fi
 
 echo " "
 echo "------------------------------------"
 echo "✅ Validating Output"
 echo " "
-cd ../apigen_ouput/ && ls -la
+cd ../apigen_ouput/ && ls -lah
 echo " "
 echo "------------------------------------"
 echo " "
@@ -92,21 +95,37 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
     git commit -a -m "➕ Create $PUSH_TO_BRANCH Branch"
     git push origin $PUSH_TO_BRANCH
     cd ..
+    echo "
+🗃 $PUSH_TO_BRANCH Created
+"
   else
     git clone --quiet --branch=$PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
+    echo "
+👌 $PUSH_TO_BRANCH Cloned
+"
   fi
 
-
-  #git clone --depth=1 --single-branch --branch $PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY liverepo
   cp -r apigen_ouput/* $PUSH_TO_BRANCH/
   cd $PUSH_TO_BRANCH/
-  git add .
-  git commit -m "📖 #$GITHUB_RUN_NUMBER - ApiGen Code Docs Regenerated / ⚡ Triggered By $GITHUB_SHA"
-  git push origin $PUSH_TO_BRANCH
+  if [[ "$(git status --porcelain)" != "" ]]; then
+    git add .
+    git commit -m "📖 #$GITHUB_RUN_NUMBER - ApiGen Code Docs Regenerated / ⚡ Triggered By $GITHUB_SHA"
+    git push origin $PUSH_TO_BRANCH
+    echo "
+👌 Docs Published
+"
+  else
+    echo "
+✅ Nothing To Push
+"
+  if
 else
   cd $GITHUB_WORKSPACE
   cp -r ../apigen_ouput/* $OUTPUT_FOLDER
   cd $OUTPUT_FOLDER
   ls -lah
   rm -rf ../apigen_ouput
+  echo "
+✅ Docs Copied To $OUTPUT_FOLDER
+"
 fi
