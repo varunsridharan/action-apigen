@@ -81,9 +81,25 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   echo " "
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   cd ../
-  git clone --depth=1 --single-branch --branch $PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY liverepo
-  cp -r apigen_ouput/* liverepo/
-  cd liverepo/
+
+  if [ -z "$(git ls-remote --heads https://${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git ${PUSH_TO_BRANCH})" ]; then
+    git clone --quiet https://$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
+    cd $PUSH_TO_BRANCH
+    git checkout --orphan $PUSH_TO_BRANCH
+    git rm -rf .
+    echo "$REPONAME" > README.md
+    git add README.md
+    git commit -a -m "➕ Create $PUSH_TO_BRANCH Branch"
+    git push origin $PUSH_TO_BRANCH
+    cd ..
+  else
+    git clone --quiet --branch=$PUSH_TO_BRANCH https://$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
+  fi
+
+
+  #git clone --depth=1 --single-branch --branch $PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY liverepo
+  cp -r apigen_ouput/* $PUSH_TO_BRANCH/
+  cd $PUSH_TO_BRANCH/
   git add .
   git commit -m "📖 #$GITHUB_RUN_NUMBER - ApiGen Code Docs Regenerated / ⚡ Triggered By $GITHUB_SHA"
   git push origin $PUSH_TO_BRANCH
