@@ -76,12 +76,11 @@ cd ../apigen_ouput/ && ls -lah
 echo " "
 echo "------------------------------------"
 echo " "
-echo " "
 
 if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
-  echo " "
-  echo "🚚 Pushing To Github"
-  echo " "
+  echo "
+  🚚 Pushing To Github
+"
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   cd ../
 
@@ -99,7 +98,7 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
 🗃 $PUSH_TO_BRANCH Created
 "
   else
-    git clone --quiet --branch=$PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
+    git clone --quiet --branch=$PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH
     echo "
 👌 $PUSH_TO_BRANCH Cloned
 "
