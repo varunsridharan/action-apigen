@@ -68,7 +68,7 @@ echo "Validating Output"
 cd ../apigen_ouput/
 ls -la
 
-if [["${AUTO_PUSH}" == "$YES_VAL"]]; then
+if [! -z "$AUTO_PUSH" ]; then
   echo "Pushing To Github"
   git init
   git remote add origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
