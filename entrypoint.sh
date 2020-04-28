@@ -59,7 +59,9 @@ echo "✅ Validating Output"
 cd ../apigen_ouput/
 ls -la
 
-if [! -z "$AUTO_PUSH" ]; then
+echo " "
+
+if [! -z $AUTO_PUSH ]; then
   echo "🚚 Pushing To Github"
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   git init
@@ -69,7 +71,7 @@ if [! -z "$AUTO_PUSH" ]; then
   git push origin "master:${PUSH_TO_BRANCH}" -f
 else
   cd $GITHUB_WORKSPACE
-  cp -r ../apigen_ouput/ $OUTPUT_FOLDER
+  cp -r ../apigen_ouput/* $OUTPUT_FOLDER
   cd $OUTPUT_FOLDER
   ls -lah
   rm -rf ../apigen_ouput
