@@ -1,5 +1,9 @@
 #FROM alpine:latest
-FROM composer:1.8.0
+FROM php:7.1-cli-alpine3.10
+
+RUN apk add git
+
+RUN apk add curl
 
 COPY entrypoint.sh /entrypoint.sh
 
