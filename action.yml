@@ -33,3 +33,4 @@ runs:
     - ${{ inputs.after_cmd }}
     - ${{ inputs.auto_push }}
     - ${{ inputs.output_folder }}
+    - ${{ inputs.source_folder }}

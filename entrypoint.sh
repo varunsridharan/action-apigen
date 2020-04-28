@@ -18,10 +18,6 @@ if [[ -z "$PUSH_TO_BRANCH" ]]; then
   exit 1
 fi
 
-if [ -z "$AUTO_PUSH" ]; then
-  AUTO_PUSH="yes"
-fi
-
 if [ -z "$SOURCE_FOLDER" ]; then
   SOURCE_FOLDER=""
 fi
@@ -63,7 +59,7 @@ echo "✅ Validating Output"
 cd ../apigen_ouput/
 ls -la
 
-if [[! -z "$AUTO_PUSH" ]]; then
+if [! -z "$AUTO_PUSH" ]; then
   echo "🚚 Pushing To Github"
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   git init
