@@ -50,7 +50,7 @@ echo "
 Installing Composer
 "
 cd apigen
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+#curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 echo '{
   "require" : {
