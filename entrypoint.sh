@@ -25,6 +25,8 @@ if [ -z "$SOURCE_FOLDER" ]; then
   SOURCE_FOLDER=""
 fi
 
+FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
+
 #echo "
 #👽   Global Variable
 #✏️   PUSH_TO_BRANCH : $PUSH_TO_BRANCH
@@ -54,8 +56,6 @@ echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
 composer update
 chmod +x ./vendor/bin/apigen
 
-FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
-
 echo "
 🚀 Running ApiGen
 Source Folder : $FULL_SOURCE_FOLDER
@@ -81,17 +81,24 @@ echo "
 
 "
 
-#if [ ! -z $AUTO_PUSH ]; then
 if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   echo "
   🚚 Pushing To Github
   "
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
-  git init
-  git remote add origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+  cd ../
+  git clone https://github.com/$GITHUB_REPOSITORY live-repo
+  git checkout $PUSH_TO_BRANCH
+  cp -r apigen_ouput/* live-repo
   git add .
   git commit -m "📖 ApiGen Code Docs Regenerated"
   git push origin "master:${PUSH_TO_BRANCH}" -f
+
+  #git init
+  #git remote add origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+  #git add .
+  #git commit -m "📖 ApiGen Code Docs Regenerated"
+  #git push origin "master:${PUSH_TO_BRANCH}" -f
 else
   cd $GITHUB_WORKSPACE
   cp -r ../apigen_ouput/* $OUTPUT_FOLDER
