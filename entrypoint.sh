@@ -42,13 +42,12 @@ echo "✨ Installing Composer"
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >>/dev/null 2>&1
 
 echo "✨ Installing ApiGen"
-echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
-echo "----------------------"
-
-echo "📈 ApiGen Install Log"
 echo "//////////////////////////////"
+echo " "
+echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
 composer update
 chmod +x ./vendor/bin/apigen
+echo " "
 echo "//////////////////////////////"
 
 echo " "
