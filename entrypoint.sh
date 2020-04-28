@@ -44,47 +44,47 @@ if [[ ! -z "$BEFORE_CMD" ]]; then
 fi
 
 cd ../
+echo " "
+echo "------------------------------------"
 echo "🏗 Doing Groud Work"
 mkdir apigen
 mkdir apigen_ouput
-
-echo "✨ Installing Composer
-"
 cd apigen
+echo "✨ Installing Composer"
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+echo "✨ Installing ApiGen"
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
 composer update
 chmod +x ./vendor/bin/apigen
 
-echo "
-🚀 Running ApiGen
-Source Folder : $FULL_SOURCE_FOLDER
+echo " "
+echo "------------------------------------"
+echo "🚀 Running ApiGen"
+echo "--- 📈 Source Folder : $FULL_SOURCE_FOLDER"
+echo "------------------------------------"
+echo " "
 
-"
 ./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
 
 cd $GITHUB_WORKSPACE
 # Custom Command Option
 if [[ ! -z "$AFTER_CMD" ]]; then
-  echo "
-  ⚡️Running AFTER_CMD
-  "
+  echo "⚡️Running AFTER_CMD"
+  echo " "
   eval "$AFTER_CMD"
 fi
 
-echo "
-✅ Validating Output
-"
+echo "✅ Validating Output"
+echo " "
+
 cd ../apigen_ouput/ && ls -la
 
-echo "
-
-"
+echo " "
+echo " "
 
 if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
-  echo "
-  🚚 Pushing To Github
-  "
+  echo "🚚 Pushing To Github"
+  echo " "
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   cd ../
   git clone -b $PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY liverepo
