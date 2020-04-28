@@ -58,37 +58,29 @@ echo '{
   }
 }' >>composer.json
 
-composer update
+composer install --no-dev
 chmod +x ./vendor/bin/apigen
 
 FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
 
 echo "
 Running ApiGen
-
-Source Folder : $FULL_SOURCE_FOLDER
-"
-./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
+Source Folder : $FULL_SOURCE_FOLDER"
+./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput --debug
 
 cd $GITHUB_WORKSPACE
 # Custom Command Option
 if [[ ! -z "$AFTER_CMD" ]]; then
-  echo "
-Running AFTER_CMD
-"
+  echo "Running AFTER_CMD"
   eval "$AFTER_CMD"
 fi
 
-echo "
-Validating Output
-"
+echo "Validating Output"
 cd ../apigen_ouput/
 ls -lah
 
 if [["$AUTO_PUSH" == 'yes']]; then
-  echo "
-Pushing To Github
-"
+  echo "Pushing To Github"
   git init
   git remote add origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
   git add .
