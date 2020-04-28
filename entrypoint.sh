@@ -33,16 +33,12 @@ fi
 
 # Custom Command Option
 if [[ ! -z "$BEFORE_CMD" ]]; then
-  echo "
-Running BEFORE_CMD
-"
+  echo "Running BEFORE_CMD"
   eval "$BEFORE_CMD"
 fi
 
 cd ../
-echo "
-Creating Required TEMP DIR
-"
+echo "Creating Required TEMP DIR"
 mkdir apigen
 mkdir apigen_ouput
 
@@ -51,13 +47,7 @@ Installing Composer
 "
 cd apigen
 #curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-echo '{
-  "require" : {
-      "apigen/apigen" : "4.1.2"
-  }
-}' >>composer.json
-
+echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
 composer install --no-dev
 chmod +x ./vendor/bin/apigen
 
