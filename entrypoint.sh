@@ -81,7 +81,7 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   echo " "
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   cd ../
-  git clone -b $PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY liverepo
+  git clone --depth=1 --single-branch --branch $PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY liverepo
   cp -r apigen_ouput/* liverepo/
   cd liverepo/
   git add .
