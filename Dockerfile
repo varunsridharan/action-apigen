@@ -1,8 +1,7 @@
 #FROM alpine:latest
 FROM php:7.2
 
-RUN apt-get update
-RUN apt-get install -y git curl
+RUN apt-get install -y git curl cron zlib1g-dev
 
 COPY entrypoint.sh /entrypoint.sh
 

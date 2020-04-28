@@ -26,7 +26,7 @@ if [ -z "$SOURCE_FOLDER" ]; then
   SOURCE_FOLDER=""
 fi
 
-if ['yes' == $AUTO_PUSH]; then
+if [["$AUTO_PUSH" == 'yes']]; then
   # Update Github Config.
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
 fi
@@ -85,7 +85,7 @@ Validating Output
 cd ../apigen_ouput/
 ls -lah
 
-if ['yes' == $AUTO_PUSH]; then
+if [["$AUTO_PUSH" == 'yes']]; then
   echo "
 Pushing To Github
 "
