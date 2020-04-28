@@ -48,7 +48,7 @@ Installing Composer
 cd apigen
 #curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
-composer install --no-dev
+composer update
 chmod +x ./vendor/bin/apigen
 
 FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
