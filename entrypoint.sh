@@ -82,8 +82,8 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   cd ../
 
-  if [ -z "$(git ls-remote --heads https://${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git ${PUSH_TO_BRANCH})" ]; then
-    git clone --quiet https://$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
+  if [ -z "$(git ls-remote --heads https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git ${PUSH_TO_BRANCH})" ]; then
+    git clone --quiet https://x-access-token:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
     cd $PUSH_TO_BRANCH
     git checkout --orphan $PUSH_TO_BRANCH
     git rm -rf .
@@ -93,7 +93,7 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
     git push origin $PUSH_TO_BRANCH
     cd ..
   else
-    git clone --quiet --branch=$PUSH_TO_BRANCH https://$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
+    git clone --quiet --branch=$PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
   fi
 
 
