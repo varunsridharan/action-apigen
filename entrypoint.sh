@@ -92,7 +92,7 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   cd liverepo/
   git add .
   git commit -m "#$GITHUB_RUN_NUMBER 📖 ApiGen Code Docs Regenerated | ⚡️Trigged By $GITHUB_SHA"
-  git push $PUSH_TO_BRANCH
+  git push origin $PUSH_TO_BRANCH
 
   #git init
   #git remote add origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
