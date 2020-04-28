@@ -91,7 +91,7 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   cp -r apigen_ouput/* liverepo/
   cd liverepo/
   git add .
-  git commit -m "📖 ApiGen Code Docs Regenerated"
+  git commit -m "#$GITHUB_RUN_NUMBER 📖 ApiGen Code Docs Regenerated | ⚡️Trigged By $GITHUB_SHA"
   git push
 
   #git init
