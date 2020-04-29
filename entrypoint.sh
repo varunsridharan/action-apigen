@@ -43,7 +43,7 @@ cd apigen
 
 echo "✨ Installing Composer"
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >>/dev/null 2>&1
-echo "✨ Installing ApiGen"
+echo "##[group] ✨ Installing ApiGen"
 #echo "//////////////////////////////"
 #echo " "
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
@@ -51,7 +51,7 @@ composer update >>/dev/null 2>&1
 chmod +x ./vendor/bin/apigen
 #echo " "
 #echo "//////////////////////////////"
-#echo " "
+echo "##[endgroup]"
 #echo "------------------------------------"
 echo "🚀 Running ApiGen"
 echo "--- 📈 Source Folder : $FULL_SOURCE_FOLDER"
