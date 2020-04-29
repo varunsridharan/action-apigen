@@ -16,9 +16,18 @@ Simple Github Action Which Helps You To Generate PHP Code Documentation Website 
 > **Note** Provide A Branch Which is only for the docs. if any other contents in it then all will be deleted **DO NOT USE : MASTER**  
 
 ## Cached Stats
-With cached enabled workflow takes only around **25s** to **35s**
-if cached disabled then workflow takes around **45s** to **55s**
-cache is useful then running in private repo or if you want to reduce load in github servers  
+***Cache is useful when running in private repo or if you want to reduce load in github servers*** 
+
+### With Cache
+> With cached enabled workflow takes only around **25s** to **35s**
+
+![https://raw.githubusercontent.com/varunsridharan/action-apigen/master/assets/with-cache.jpg](https://raw.githubusercontent.com/varunsridharan/action-apigen/master/assets/with-cache.jpg)
+
+### Without Cache
+> if cached disabled then workflow takes around **45s** to **55s**
+
+![https://raw.githubusercontent.com/varunsridharan/action-apigen/master/assets/without-cache.jpg](https://raw.githubusercontent.com/varunsridharan/action-apigen/master/assets/without-cache.jpg)
+
 
 ## Example Workflow File
 
