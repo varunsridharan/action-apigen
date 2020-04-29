@@ -47,12 +47,11 @@ mkdir apigen
 mkdir apigen_ouput
 
 if [ "$CACHED_APIGEN" == "$YES_VAL" ]; then
-  cp -r /cached-apigen/ apigen/
+  cp -r /cached-apigen/* apigen/
   cd apigen/
   ls -lah
   cd vendor
   ls -lah
-  exit
 else
   echo "✨ Installing Composer"
   cd apigen
