@@ -7,7 +7,6 @@ AFTER_CMD="$INPUT_AFTER_CMD"
 AUTO_PUSH="$INPUT_AUTO_PUSH"
 OUTPUT_FOLDER="$INPUT_OUTPUT_FOLDER"
 SOURCE_FOLDER="$INPUT_SOURCE_FOLDER"
-FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
 echo " "
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
@@ -32,6 +31,8 @@ if [[ ! -z "$BEFORE_CMD" ]]; then
   echo " "
 fi
 
+FULL_SOURCE_FOLDER="$GITHUB_WORKSPACE/$SOURCE_FOLDER"
+
 cd ../
 
 echo " "
@@ -44,64 +45,49 @@ cd apigen
 echo "✨ Installing Composer"
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >>/dev/null 2>&1
 echo "##[group] ✨ Installing ApiGen"
-#echo "//////////////////////////////"
-#echo " "
 echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
-composer update >>/dev/null 2>&1
+composer update
 chmod +x ./vendor/bin/apigen
-#echo " "
-#echo "//////////////////////////////"
 echo "##[endgroup]"
-#echo "------------------------------------"
-echo "🚀 Running ApiGen"
+echo "##[group] 🚀 Running ApiGen"
 echo "--- 📈 Source Folder : $FULL_SOURCE_FOLDER"
-#echo "------------------------------------"
 echo " "
 ./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
+echo "##[endgroup]"
 cd $GITHUB_WORKSPACE
 
 if [[ ! -z "$AFTER_CMD" ]]; then
-  echo "⚡️Running AFTER_CMD"
-  echo "---------------------------------------------------------------"
+  echo "##[group] ⚡️Running AFTER_CMD"
   eval "$AFTER_CMD"
-  echo "---------------------------------------------------------------"
-  echo " "
+  echo "##[endgroup]"
 fi
 
-echo " "
-echo "------------------------------------"
-echo "✅ Validating Output"
-echo " "
+echo "##[group]  ✅ Validating Output"
 cd ../apigen_ouput/ && ls -lah
-echo " "
-echo "------------------------------------"
-echo " "
+echo "##[endgroup]"
 
 if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
-  echo "
-  🚚 Pushing To Github
-"
+  echo "🚚 Pushing To Github"
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   cd ../
 
   if [ -z "$(git ls-remote --heads https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git ${PUSH_TO_BRANCH})" ]; then
-    git clone --quiet https://x-access-token:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH > /dev/null
+    echo "##[group] $PUSH_TO_BRANCH Create Log"
+    git clone --quiet https://x-access-token:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH >/dev/null
     cd $PUSH_TO_BRANCH
-    git checkout --orphan $PUSH_TO_BRANCH > /dev/null
-    git rm -rf . > /dev/null
-    echo "$GITHUB_REPOSITORY" > README.md
+    git checkout --orphan $PUSH_TO_BRANCH >/dev/null
+    git rm -rf . >/dev/null
+    echo "$GITHUB_REPOSITORY" >README.md
     git add README.md
     git commit -a -m "➕ Create $PUSH_TO_BRANCH Branch"
     git push origin $PUSH_TO_BRANCH
     cd ..
-    echo "
-🗃 $PUSH_TO_BRANCH Created
-"
+    echo "##[endgroup]"
+    echo "🗃 $PUSH_TO_BRANCH Created"
   else
+    echo "##[group] 👌 $PUSH_TO_BRANCH Clone Log"
     git clone --quiet --branch=$PUSH_TO_BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git $PUSH_TO_BRANCH
-    echo "
-👌 $PUSH_TO_BRANCH Cloned
-"
+    echo "##[endgroup]"
   fi
 
   cp -r apigen_ouput/* $PUSH_TO_BRANCH/
@@ -111,13 +97,9 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
     git add .
     git commit -m "📖 #$GITHUB_RUN_NUMBER - ApiGen Code Docs Regenerated / ⚡ Triggered By $GITHUB_SHA"
     git push origin $PUSH_TO_BRANCH
-    echo "
-👌 Docs Published
-"
+    echo "👌 Docs Published"
   else
-    echo "
-✅ Nothing To Push
-"
+    echo "✅ Nothing To Push"
   fi
 
 else
@@ -126,7 +108,5 @@ else
   cd $OUTPUT_FOLDER
   ls -lah
   rm -rf ../apigen_ouput
-  echo "
-✅ Docs Copied To $OUTPUT_FOLDER
-"
+  echo "✅ Docs Copied To $OUTPUT_FOLDER"
 fi
