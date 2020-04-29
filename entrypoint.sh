@@ -46,7 +46,7 @@ echo "🏗 Doing Groud Work"
 mkdir apigen
 mkdir apigen_ouput
 
-if["$CACHED_APIGEN" == "$YES_VAL"];then
+if["$CACHED_APIGEN" == "$YES_VAL"]; then
   cd / && ls -lah
   exit
 else
