@@ -48,8 +48,7 @@ mkdir apigen_ouput
 cd apigen
 
 if [ "$CACHED_APIGEN" == "$YES_VAL" ]; then
-  echo "✨ Using Local Cache"
-  ls -lah
+  echo "##[group] ✨ Using Local Cache"
   cp -r /cached-apigen/* ./
   ls -lah
   echo "##[endgroup]"
@@ -59,13 +58,13 @@ else
   echo "##[group] ✨ Installing ApiGen"
   echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
   composer update
-  chmod +x ./vendor/bin/apigen
   echo "##[endgroup]"
 fi
 
 echo "##[group] 🚀 Running ApiGen"
 echo "--- 📈 Source Folder : $FULL_SOURCE_FOLDER"
 echo " "
+chmod +x ./vendor/bin/apigen
 ./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
 echo "##[endgroup]"
 
