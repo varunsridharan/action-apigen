@@ -67,6 +67,7 @@ cd ../apigen_ouput/ && ls -lah
 echo "##[endgroup]"
 
 if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
+  echo " "
   echo "🚚 Pushing To Github"
   git config --global user.email "githubactionbot+apigen@gmail.com" && git config --global user.name "ApiGen Github Bot"
   cd ../
