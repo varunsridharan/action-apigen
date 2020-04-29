@@ -7,6 +7,7 @@ AFTER_CMD="$INPUT_AFTER_CMD"
 AUTO_PUSH="$INPUT_AUTO_PUSH"
 OUTPUT_FOLDER="$INPUT_OUTPUT_FOLDER"
 SOURCE_FOLDER="$INPUT_SOURCE_FOLDER"
+CACHED_APIGEN="$INPUT_CACHED_APIGEN"
 echo " "
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
@@ -21,6 +22,10 @@ fi
 
 if [ -z "$SOURCE_FOLDER" ]; then
   SOURCE_FOLDER=""
+fi
+
+if [ -z "$CACHED_APIGEN" ]; then
+  CACHED_APIGEN="yes"
 fi
 
 if [[ ! -z "$BEFORE_CMD" ]]; then
@@ -40,20 +45,27 @@ echo "------------------------------------"
 echo "🏗 Doing Groud Work"
 mkdir apigen
 mkdir apigen_ouput
-cd apigen
 
-echo "✨ Installing Composer"
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >>/dev/null 2>&1
-echo "##[group] ✨ Installing ApiGen"
-echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
-composer update
-chmod +x ./vendor/bin/apigen
-echo "##[endgroup]"
+if["$CACHED_APIGEN" == "$YES_VAL"];then
+  cd / && ls -lah
+  exit
+else
+  echo "✨ Installing Composer"
+  cd apigen
+  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >>/dev/null 2>&1
+  echo "##[group] ✨ Installing ApiGen"
+  echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
+  composer update
+  chmod +x ./vendor/bin/apigen
+  echo "##[endgroup]"
+fi
+
 echo "##[group] 🚀 Running ApiGen"
 echo "--- 📈 Source Folder : $FULL_SOURCE_FOLDER"
 echo " "
 ./vendor/bin/apigen generate -s $FULL_SOURCE_FOLDER --destination ../apigen_ouput
 echo "##[endgroup]"
+
 cd $GITHUB_WORKSPACE
 
 if [[ ! -z "$AFTER_CMD" ]]; then

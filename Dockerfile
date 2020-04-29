@@ -6,6 +6,10 @@ RUN apk add curl
 
 COPY entrypoint.sh /entrypoint.sh
 
+COPY apigen /cached-apigen
+
 RUN chmod +x /entrypoint.sh
+
+RUN chmod +x /cached-apigen
 
 ENTRYPOINT ["/entrypoint.sh"]

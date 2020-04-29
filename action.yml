@@ -23,7 +23,9 @@ inputs:
   source_folder:
     description: 'Custom Source Folder if auto_push is disabled'
     default: ''
-
+  cached_apigen:
+    description: 'If set to yes then it uses cached apigen'
+    default: 'yes'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -34,3 +36,4 @@ runs:
     - ${{ inputs.auto_push }}
     - ${{ inputs.output_folder }}
     - ${{ inputs.source_folder }}
+    - ${{ inputs.cached_apigen }}
