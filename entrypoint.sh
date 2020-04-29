@@ -51,6 +51,7 @@ if [ "$CACHED_APIGEN" == "$YES_VAL" ]; then
   echo "##[group] ✨ Using Local Cache"
   cp -r /cached-apigen/* ./
   ls -lah
+  chmod 777 -r ./
   echo "##[endgroup]"
 else
   echo "✨ Installing Composer"
