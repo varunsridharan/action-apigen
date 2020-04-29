@@ -45,16 +45,14 @@ echo "------------------------------------"
 echo "🏗 Doing Groud Work"
 mkdir apigen
 mkdir apigen_ouput
+cd apigen
 
 if [ "$CACHED_APIGEN" == "$YES_VAL" ]; then
+  echo "✨ Using Local Cache"
   cp -r /cached-apigen/* apigen/
-  cd apigen/
-  ls -lah
-  cd vendor
-  ls -lah
+  echo "##[endgroup]"
 else
   echo "✨ Installing Composer"
-  cd apigen
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >>/dev/null 2>&1
   echo "##[group] ✨ Installing ApiGen"
   echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
