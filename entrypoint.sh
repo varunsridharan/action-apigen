@@ -10,12 +10,12 @@ SOURCE_FOLDER="$INPUT_SOURCE_FOLDER"
 CACHED_APIGEN="$INPUT_CACHED_APIGEN"
 echo " "
 
-if [[ -z "$GITHUB_TOKEN" ]]; then
+if [ -z "$GITHUB_TOKEN" ]; then
   echo "🚩 Set the GITHUB_TOKEN env variable"
   exit 1
 fi
 
-if [[ -z "$PUSH_TO_BRANCH" ]]; then
+if [ -z "$PUSH_TO_BRANCH" ]; then
   echo "🚩 Set the PUSH_TO_BRANCH Variable"
   exit 1
 fi
@@ -28,7 +28,7 @@ if [ -z "$CACHED_APIGEN" ]; then
   CACHED_APIGEN="yes"
 fi
 
-if [[ ! -z "$BEFORE_CMD" ]]; then
+if [ ! -z "$BEFORE_CMD" ]; then
   echo "⚡️ Running BEFORE_CMD"
   echo "---------------------------------------------------------------"
   eval "$BEFORE_CMD"
@@ -57,8 +57,10 @@ else
   echo "✨ Installing Composer"
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >>/dev/null 2>&1
   echo "##[group] ✨ Installing ApiGen"
-  echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
-  composer update
+  #echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
+  #composer update
+  echo '{"require": { "apigen/apigen": "dev-master", "roave/better-reflection": "dev-master"}}' >> composer.json
+  composer install --prefer-source --no-interaction --no-suggest
   echo "##[endgroup]"
 fi
 
@@ -71,7 +73,7 @@ echo "##[endgroup]"
 
 cd $GITHUB_WORKSPACE
 
-if [[ ! -z "$AFTER_CMD" ]]; then
+if [ ! -z "$AFTER_CMD" ]; then
   echo "##[group] ⚡️Running AFTER_CMD"
   eval "$AFTER_CMD"
   echo "##[endgroup]"
@@ -109,7 +111,7 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   cp -r apigen_ouput/* $PUSH_TO_BRANCH/
   cd $PUSH_TO_BRANCH/
 
-  if [[ "$(git status --porcelain)" != "" ]]; then
+  if [ "$(git status --porcelain)" != "" ]; then
     echo "##[group] 👌 Docs Published"
     git add .
     git commit -m "📖 #$GITHUB_RUN_NUMBER - ApiGen Code Docs Regenerated / ⚡ Triggered By $GITHUB_SHA"
