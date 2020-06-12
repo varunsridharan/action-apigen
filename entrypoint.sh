@@ -112,7 +112,7 @@ if [ "$AUTO_PUSH" == "$YES_VAL" ]; then
   if [ "$(git status --porcelain)" != "" ]; then
     echo "##[group] 👌 Docs Published"
     git add .
-    git commit -m " 📖  #$GITHUB_RUN_NUMBER - ApiGen Code Docs Regenerated /  ⚡  Triggered By $GITHUB_SHA"
+    git commit -m " :book:  #$GITHUB_RUN_NUMBER - ApiGen Code Docs Regenerated /  :zap:  Triggered By $GITHUB_SHA"
     git push origin $PUSH_TO_BRANCH
     echo "##[endgroup]"
   else
