@@ -57,10 +57,8 @@ else
   echo "✨ Installing Composer"
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer >>/dev/null 2>&1
   echo "##[group] ✨ Installing ApiGen"
-  #echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
-  #composer update
-  echo '{"require": { "apigen/apigen": "dev-master", "roave/better-reflection": "dev-master"}}' >> composer.json
-  composer install --prefer-source --no-interaction --no-suggest
+  echo '{ "require" : { "apigen/apigen" : "4.1.2" } }' >>composer.json
+  composer update
   echo "##[endgroup]"
 fi
 
